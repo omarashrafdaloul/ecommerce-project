@@ -18,8 +18,8 @@ const products = [
 ];
 
 // ===== Part B: Render function =====
-   function renderProducts(list) {
-      const container = document.getElementById("product-list");
+function renderProducts(list) {
+  const container = document.getElementById("product-list");
   container.innerHTML = "";
 
   if (list.length === 0) {
@@ -58,8 +58,11 @@ function applyFilters() {
     ? [...products]
     : products.filter(p => p.category === currentCategory);
 
-  // 2) filter by search term
-  result = result.filter(p => p.name.toLowerCase().includes(term));
+  // 2) filter by search term (name or category)
+  result = result.filter(p =>
+    p.name.toLowerCase().includes(term) ||
+    p.category.toLowerCase().includes(term)
+  );
 
   // 3) sort (on a copy, never the original array)
   if (sortValue === "low-high") result.sort((a, b) => a.price - b.price);
@@ -69,6 +72,9 @@ function applyFilters() {
 }
 
 // Search box
+document.getElementById("search-box").addEventListener("input", applyFilters);
+
+// Category buttons
 document.getElementById("search-box").addEventListener("input", applyFilters);
 
 // Category buttons
