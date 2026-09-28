@@ -108,3 +108,59 @@ body {
     padding: 3rem 1rem;
   }
 }
+
+/* ===== Lab 2: Controls ===== */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin: 20px 0;
+}
+
+#search-box,
+#sort-select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+#search-box {
+  min-width: 220px;
+}
+
+.categories {
+  display: flex;
+  gap: 8px;
+}
+
+.category-btn {
+  padding: 8px 14px;
+  border: 1px solid #1f3864;
+  background: #fff;
+  color: #1f3864;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.category-btn.active {
+  background: #1f3864;
+  color: #fff;
+}
+
+/* ===== Lab 2: Stock labels ===== */
+.stock {
+  font-weight: bold;
+}
+
+.stock.in  { color: green; }
+.stock.low { color: orange; }
+.stock.out { color: red; }
+
+/* ===== Lab 2: Disabled button ===== */
+.product button:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
