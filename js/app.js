@@ -1,6 +1,6 @@
 // ===== Supabase connection =====
-const SUPABASE_URL = "ضعي-Project-URL-هنا";
-const SUPABASE_KEY = "ضعي-sb_publishable-key-هنا";
+const SUPABASE_URL = "https://oteufegnegyslayjblwl.supabase.co";
+const SUPABASE_KEY = "sb_publishable_3KnxyT13IZF0wzW-Vef1Bw_MEVf31hj";
 
 const supabase = window.supabase.createClient(
   SUPABASE_URL,
