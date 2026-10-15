@@ -2,10 +2,7 @@
 const SUPABASE_URL = "https://oteufegnegyslayjblwl.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3KnxyT13IZF0wzW-Vef1Bw_MEVf31hj";
 
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // سيتم تحميل المنتجات من قاعدة البيانات
 let products = [];
@@ -116,7 +113,7 @@ async function loadProducts() {
   const container = document.getElementById("product-list");
   container.innerHTML = "<p>Loading products...</p>";
 
-  const { data, error } = await supabase
+  const { data, error } = await db
     .from("product")
     .select("*, category(category_name)")
     .order("name");
