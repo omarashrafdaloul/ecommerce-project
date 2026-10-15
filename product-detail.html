@@ -1,82 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShopNow | Product Details</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <header class="site-header">
-    <h1 class="logo">ShopNow</h1>
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="products.html">Products</a>
-      <a href="about.html">About</a>
-    </nav>
-  </header>
+<script>
+  const SUPABASE_URL = "https://oteufegnegyslayjblwl.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_3KnxyT13IZF0wzW-Vef1Bw_MEVf31hj";
 
-  <main class="page-content">
-    <section id="detail">
-      <p>Loading product...</p>
-    </section>
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    <p><a href="products.html">Back to products</a></p>
-  </main>
+  const params = new URLSearchParams(window.location.search);
+  const productId = params.get("id");
 
-  <footer class="site-footer">
-    <p>&copy; 2026 ShopNow.</p>
-  </footer>
+  async function loadProduct() {
+    const detail = document.getElementById("detail");
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const SUPABASE_URL =
-      "https://oteufegnegyslayjblwl.supabase.co";
-
-    const SUPABASE_KEY =
-      "sb_publishable_3KnxyT13IZF0wzW-Vef1Bw_MEVf31hj";
-
-    const supabase = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get("id");
-
-    async function loadProduct() {
-      const detail = document.getElementById("detail");
-
-      if (!productId) {
-        detail.innerHTML = "<p>Product not found.</p>";
-        return;
-      }
-
-      const { data: product, error } = await supabase
-        .from("product")
-        .select("*, category(category_name)")
-        .eq("product_id", productId)
-        .single();
-
-      if (error || !product) {
-        detail.innerHTML = "<p>Product not found.</p>";
-        return;
-      }
-
-      const categoryName =
-        product.category?.category_name ?? "Uncategorized";
-
-      detail.innerHTML = `
-        <article class="product">
-          <h2>${product.name}</h2>
-          <p>${product.description ?? ""}</p>
-          <p>AED ${Number(product.price).toLocaleString()}</p>
-          <p>Category: ${categoryName}</p>
-          <p>Stock: ${product.stock}</p>
-        </article>`;
+    if (!productId) {
+      detail.innerHTML = "<p>Product not found.</p>";
+      return;
     }
 
-    loadProduct();
-  </script>
-</body>
-</html>
+    const { data: product, error } = await db
+      .from("product")
+      .select("*, category(category_name)")
+      .eq("product_id", productId)
+      .single();
+
+    if (error || !product) {
+      detail.innerHTML = "<p>Product not found.</p>";
+      return;
+    }
+
+    const categoryName =
+      product.category?.category_name ?? "Uncategorized";
+
+    detail.innerHTML = `
+      <article class="product">
+        <h2>${product.name}</h2>
+        <p>${product.description ?? ""}</p>
+        <p>AED ${Number(product.price).toLocaleString()}</p>
+        <p>Category: ${categoryName}</p>
+        <p>Stock: ${product.stock}</p>
+      </article>`;
+  }
+
+  loadProduct();
+</script>
